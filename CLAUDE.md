@@ -197,14 +197,18 @@ Attenzioni:
 ## 10. Piano in fasi
 
 ### Fase 0 — Prerequisiti
-- [ ] Introdurre CI minima (lint + `tsc` + Playwright) — oggi assente.
-- [ ] Setup progetto Supabase + stack locale (CLI) per sviluppare RLS/migrazioni.
-- [ ] Setup progetto Vercel collegato al repo.
+- [x] Introdurre CI minima (lint + `tsc` + Playwright) — `.github/workflows/ci.yml`.
+- [~] Setup stack Supabase locale: scaffold in `supabase/` (config + migrazioni);
+      richiede CLI Supabase + Docker sulla macchina dello sviluppatore (`supabase start`).
+- [ ] Setup progetto Vercel collegato al repo — richiede l'account dell'utente.
 
 ### Fase 1 — Database & Auth
-- [ ] Migrazioni schema (sezione 4) + seed admin.
-- [ ] Policy RLS (sezione 5) con test.
-- [ ] Configurare Supabase Auth (email/password + anonimo + CAPTCHA).
+- [x] Migrazioni schema (sezione 4) + seed admin — `supabase/migrations/*`, `supabase/seed.sql`
+      (validate su Postgres 16 locale).
+- [x] Policy RLS (sezione 5) con test — `supabase/migrations/20260702090100_rls_policies.sql`,
+      test pgTAP in `supabase/tests/rls_test.sql` (logica verificata su Postgres locale).
+- [x] Configurare Supabase Auth (email/password + anonimo; CAPTCHA predisposto e
+      commentato in `supabase/config.toml`, da abilitare in cloud con secret reale).
 
 ### Fase 2 — Backend (Vercel API)
 - [ ] Riscrivere i 11 endpoint (sezione 6) con service role + validazione.

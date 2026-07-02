@@ -1,0 +1,51 @@
+# Supabase local config — Beer Game (Vercel + Supabase migration, Phase 1).
+#
+# If `supabase start` errors on an unknown/removed key for YOUR CLI version,
+# run `supabase init` to regenerate this file, then re-apply the [auth] settings
+# below (anonymous sign-ins + email + captcha) — those are the ones this project
+# actually depends on.
+project_id = "beergame"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+# Local mail catcher — instructor approval emails land here during dev.
+[inbucket]
+enabled = true
+port = 54324
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173"]
+jwt_expiry = 3600
+enable_signup = true
+# Students join anonymously (replaces Firebase signInAnonymously).
+enable_anonymous_sign_ins = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+# Local dev: skip email confirmation so instructor flows are easy to test.
+# In the cloud project you likely want this = true.
+enable_confirmations = false
+
+# Anti-abuse (App Check replacement — see CLAUDE.md §2/§12). Enable in the CLOUD
+# project with a real hCaptcha secret. Left OFF locally so tests aren't blocked.
+# [auth.captcha]
+# enabled = true
+# provider = "hcaptcha"
+# secret = "env(SUPABASE_AUTH_CAPTCHA_SECRET)"
